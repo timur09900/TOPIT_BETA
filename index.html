@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТАРП | Киберспортивная арена</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #0ff0fc;
+            --neon-pink: #ff00ff;
+            --neon-purple: #8a2be2;
+            --neon-green: #00ff9d;
+            --dark-space: #0a0a1a;
+            --deep-space: #121230;
+            --space-gray: #1e1e3d;
+            --cyber-yellow: #f5d300;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark-space);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 252, 0.15) 0%, transparent 25%);
+        }
+        
+        .cyber-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Глитч-эффект */
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 var(--neon-blue), -2px 0 var(--neon-pink); }
+            25% { text-shadow: -2px 0 var(--neon-blue), 2px 0 var(--neon-pink); }
+            50% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-blue); }
+            75% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-blue); }
+            100% { text-shadow: 2px 0 var(--neon-blue), -2px 0 var(--neon-pink); }
+        }
+        
+        /* Шапка */
+        .cyber-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--space-gray);
+            position: relative;
+        }
+        
+        .cyber-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-green));
+            box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-green);
+            animation: rainbow-border 5s linear infinite;
+        }
+        
+        @keyframes rainbow-border {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: transparent;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(0, 255, 252, 0.3);
+            animation: glitch 3s infinite alternate;
+            letter-spacing: 2px;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .notification-bell:hover {
+            transform: rotate(15deg);
+            color: var(--neon-pink);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--neon-pink);
+            color: black;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--neon-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .user-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent, transparent, transparent,
+                rgba(0, 255, 252, 0.1), transparent, transparent, transparent
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+        
+        /* Навигация */
+        .cyber-tabs {
+            display: flex;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .cyber-tab {
+            padding: 15px 30px;
+            margin-right: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            background: rgba(30, 30, 61, 0.5);
+            border: none;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .cyber-tab.active {
+            color: white;
+            background: var(--space-gray);
+            box-shadow: 0 0 15px rgba(0, 255, 252, 0.5);
+        }
+        
+        .cyber-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink);
+            animation: rainbow-border 5s linear infinite;
+        }
+        
+        .cyber-tab:hover {
+            color: white;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        /* Контент страницы */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* Профиль */
+        .cyber-profile {
+            display: flex;
+            background: rgba(30, 30, 61, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 252, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 252, 0.1);
+        }
+        
+        .cyber-profile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(0, 255, 252, 0.1) 49%, rgba(0, 255, 252, 0.1) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(0, 255, 252, 0.1) 49%, rgba(0, 255, 252, 0.1) 51%, transparent 52%);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            margin-right: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 0 30px var(--neon-blue);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px var(--neon-blue); }
+            50% { box-shadow: 0 0 40px var(--neon-pink); }
+            100% { box-shadow: 0 0 20px var(--neon-green); }
+        }
+        
+        .profile-info {
+            flex-grow: 1;
+        }
+        
+        .profile-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 252, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .profile-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 255, 252, 0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 252, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 252, 0.3);
+            border-color: var(--neon-blue);
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 48%, rgba(0, 255, 252, 0.1) 49%, 
+                rgba(0, 255, 252, 0.1) 51%, transparent 52%
+            );
+            background-size: 10px 10px;
+            opacity: 0.3;
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .cyber-button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            color: black;
+            box-shadow: 0 0 15px rgba(0, 255, 252, 0.5);
+        }
+        
+        .cyber-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(0, 255, 252, 0.8);
+        }
+        
+        .cyber-button.secondary {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+        }
+        
+        .cyber-button.secondary:hover {
+            background: rgba(0, 255, 252, 0.1);
+        }
+        
+        /* Секция лучших команд */
+        .teams-section {
+            background: rgba(30, 30, 61, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 255, 252, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 252, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--neon-blue), transparent);
+            margin-left: 20px;
+        }
+        
+        .team-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .team-card {
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 10px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 252, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card:hover {
+            transform: translateX(10px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 255, 252, 0.3);
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--neon-blue), var(--neon-pink));
+        }
+        
+        .team-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .team-score {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            font-size: 1.2rem;
+        }
+        
+        /* Турнирная секция */
+        .tournaments-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .tournament-card {
+            background: rgba(30, 30, 61, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tournament-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 48%, rgba(138, 43, 226, 0.1) 49%, 
+                rgba(138, 43, 226, 0.1) 51%, transparent 52%
+            );
+            background-size: 10px 10px;
+            opacity: 0.3;
+        }
+        
+        .tournament-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.5);
+        }
+        
+        .tournament-prize {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--cyber-yellow);
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .tournament-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--neon-purple);
+        }
+        
+        .tournament-date {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .tournament-date i {
+            margin-right: 8px;
+            color: var(--neon-blue);
+        }
+        
+        .tournament-progress {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            border-radius: 5px;
+            width: 65%;
+        }
+        
+        .tournament-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .tournament-teams {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tournament-teams i {
+            margin-right: 8px;
+            color: var(--neon-green);
+        }
+        
+        .tournament-button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tournament-button:hover {
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        }
+        
+        /* Матчи */
+        .matches-section {
+            background: rgba(30, 30, 61, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .match-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .match-card {
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .match-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--space-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .team-name {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .vs {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-pink);
+            text-align: center;
+        }
+        
+        .match-info {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .match-time {
+            display: flex;
+            align-items: center;
+}
+        
+        .match-time i {
+            margin-right: 8px;
+        }
+        
+        .watch-button {
+            padding: 8px 20px;
+            background: var(--neon-pink);
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .watch-button:hover {
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+        
+        /* Новости */
+        .news-section {
+            background: rgba(30, 30, 61, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .news-list {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+        
+        .news-card {
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 252, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 252, 0.1);
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 252, 0.3);
+        }
+        
+        .news-image {
+            height: 180px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .news-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(0, 0, 0, 0.7)
+            );
+        }
+        
+        .news-date {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+        
+        .news-excerpt {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .read-more {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Анимированный фон */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .cyber-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--neon-purple) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, var(--neon-blue) 0%, transparent 25%);
+            animation: pulse-bg 15s infinite alternate;
+        }
+        
+        @keyframes pulse-bg {
+            0% { opacity: 0.05; }
+            50% { opacity: 0.15; }
+            100% { opacity: 0.05; }
+        }
+        
+        /* Частицы */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .cyber-profile {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .action-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .cyber-tabs {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .cyber-tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .match-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .vs {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="cyber-container">
+        <header class="cyber-header">
+            <div class="logo">ТАРП</div>
+            <div class="header-controls">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
+                </div>
+                <div class="user-avatar">С</div>
+            </div>
+        </header>
+        
+        <div class="cyber-tabs">
+           <div class="cyber-tab active" data-tab="stats">Статистика</div>
+            <div class="cyber-tab" data-tab="tournaments">Турниры</div>
+            <div class="cyber-tab" data-tab="matches">Матчи</div>
+            <div class="cyber-tab" data-tab="news">Новости</div>
+            <div class="cyber-tab" data-tab="teams">Команды</div>
+        </div>
+        
+        <!-- Статистика -->
+        <div class="page-content active" id="stats">
+            <div class="cyber-profile">
+                <div class="profile-avatar">С</div>
+                <div class="profile-info">
+                    <h1 class="profile-name">VORPLA (VORP)</h1>
+                    <span class="profile-level">Уровень 2</span>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">2150</div>
+                            <div class="stat-label">Очки</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">#567</div>
+                            <div class="stat-label">Рейтинг</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1362</div>
+                            <div class="stat-label">Рейтинг ELO</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Победы</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="cyber-button">
+                            <i class="fas fa-camera"></i> Добавить фото
+                        </button>
+                        <button class="cyber-button secondary">
+                            <i class="fas fa-shield-alt"></i> На модерацию
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="teams-section">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i> Лучшие команды
+                </h2>
+                <div class="team-list">
+                    <div class="team-card">
+                        <span class="team-name">Clan A - Team B</span>
+                        <span class="team-score">1362</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Clan B - Team C</span>
+                        <span class="team-score">1425</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Clan C - Team C</span>
+                        <span class="team-score">132</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Cyber Wolves</span>
+                        <span class="team-score">1280</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Neon Warriors</span>
+                        <span class="team-score">1150</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Турниры -->
+        <div class="page-content" id="tournaments">
+            <div class="section-title">
+                <i class="fas fa-calendar-alt"></i> Активные турниры
+            </div>
+            
+            <div class="tournaments-section">
+                <div class="tournament-card">
+                    <div class="tournament-prize">$5,000</div>
+                    <h3 class="tournament-title">Winter Championship 2023</h3>
+                    <div class="tournament-date">
+                        <i class="fas fa-calendar-day"></i> 15.12.2023 - 20.12.2023
+                    </div>
+                    <div class="tournament-progress">
+                        <div class="progress-bar" style="width: 65%"></div>
+                    </div>
+                    <div class="tournament-info">
+                        <div class="tournament-teams">
+                            <i class="fas fa-users"></i> 32/64 команд
+                        </div>
+                        <div class="tournament-status">Регистрация</div>
+                    </div>
+                    <button class="tournament-button">Зарегистрироваться</button>
+                </div>
+                
+                <div class="tournament-card">
+                    <div class="tournament-prize">$2,500</div>
+                    <h3 class="tournament-title">Mobile Masters Cup</h3>
+                    <div class="tournament-date">
+                        <i class="fas fa-calendar-day"></i> 05.01.2024 - 10.01.2024
+                    </div>
+                    <div class="tournament-progress">
+                        <div class="progress-bar" style="width: 30%"></div>
+                    </div>
+                    <div class="tournament-info">
+                        <div class="tournament-teams">
+                            <i class="fas fa-users"></i> 18/32 команд
+                        </div>
+                        <div class="tournament-status">Регистрация</div>
+                    </div>
+                    <button class="tournament-button">Зарегистрироваться</button>
+                </div>
+                
+                <div class="tournament-card">
+                    <div class="tournament-prize">$1,000</div>
+                    <h3 class="tournament-title">New Year Showdown</h3>
+                    <div class="tournament-date">
+                        <i class="fas fa-calendar-day"></i> 28.12.2023 - 30.12.2023
+                    </div>
+                    <div class="tournament-progress">
+                        <div class="progress-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="tournament-info">
+                        <div class="tournament-teams">
+                            <i class="fas fa-users"></i> 24/30 команд
+                        </div>
+                        <div class="tournament-status">Регистрация</div>
+                    </div>
+                    <button class="tournament-button">Зарегистрироваться</button>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <i class="fas fa-history"></i> Прошедшие турниры
+            </div>
+            
+            <div class="tournaments-section">
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Autumn Clash 2023</h3>
+                    <div class="tournament-date">
+                        <i class="fas fa-calendar-day"></i> 15.10.2023 - 20.10.2023
+                    </div>
+                    <div class="tournament-info">
+                        <div class="tournament-teams">
+                            <i class="fas fa-trophy"></i> Победитель: Cyber Wolves
+                        </div>
+                    </div>
+                    <button class="tournament-button">Смотреть реплей</button>
+                </div>
+                
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Summer Madness</h3>
+                    <div class="tournament-date">
+                        <i class="fas fa-calendar-day"></i> 20.07.2023 - 25.07.2023
+                    </div>
+                    <div class="tournament-info">
+                        <div class="tournament-teams">
+                            <i class="fas fa-trophy"></i> Победитель: Neon Warriors
+                        </div>
+                    </div>
+                    <button class="tournament-button">Смотреть реплей</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Матчи -->
+        <div class="page-content" id="matches">
+            <div class="section-title">
+                <i class="fas fa-gamepad"></i> Ближайшие матчи
+            </div>
+            
+            <div class="matches-section">
+                <div class="match-list">
+                    <div class="match-card">
+                        <div class="team">
+                            <div class="team-logo">CW</div>
+                            <div class="team-name">Cyber Wolves</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">NW</div>
+                            <div class="team-name">Neon Warriors</div>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-time">
+                                <i class="fas fa-clock"></i> 15:00 (через 2 часа)
+                            </div>
+                            <button class="watch-button">
+                                <i class="fas fa-eye"></i> Смотреть
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="team">
+                            <div class="team-logo">AB</div>
+                            <div class="team-name">Alpha Bears</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">DS</div>
+                            <div class="team-name">Dark Snipers</div>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-time">
+                                <i class="fas fa-clock"></i> 18:30 (через 5 часов)
+                            </div>
+                            <button class="watch-button">
+                                <i class="fas fa-eye"></i> Смотреть
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="team">
+                            <div class="team-logo">TP</div>
+                            <div class="team-name">Team Phoenix</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">LD</div>
+                            <div class="team-name">Lunar Dragons</div>
+                        </div>
+                        <div class="match-info">
+                            <div class="match-time">
+                                <i class="fas fa-clock"></i> Завтра, 12:00
+                            </div>
+                            <button class="watch-button">
+                                <i class="fas fa-eye"></i> Смотреть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <i class="fas fa-history"></i> Прошедшие матчи
+            </div>
+            
+            <div class="matches-section">
+                <div class="match-list">
+                    <div class="match-card">
+                        <div class="team">
+                            <div class="team-logo">CW</div>
+                            <div class="team-name">Cyber Wolves</div>
+                        </div>
+                        <div class="vs">
+                            <div>15:10</div>
+                            <div style="font-size: 2rem; color: var(--neon-green);">WIN</div>
+                        </div>
+                        <div class="team">
+                            <div class="team-logo">VG</div>
+                            <div class="team-name">Void Guardians</div>
+                        </div>
+                        <div class="match-info">
+                            <div>Турнир: Winter Championship</div>
+                            <button class="watch-button" style="background: var(--neon-blue);">
+                                <i class="fas fa-play"></i> Реплей
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card">
+                        <div class="team">
+                            <div class="team-logo">NW</div>
+                            <div class="team-name">Neon Warriors</div>
+                        </div>
+                        <div class="vs">
+                            <div>8:15</div>
+                            <div style="font-size: 2rem; color: var(--neon-pink);">LOSE</div>
+                        </div>
+                        <div class="team">
+                            <div class="team-logo">AB</div>
+                            <div class="team-name">Alpha Bears</div>
+                        </div>
+                        <div class="match-info">
+                            <div>Турнир: Mobile Masters</div>
+                            <button class="watch-button" style="background: var(--neon-blue);">
+                                <i class="fas fa-play"></i> Реплей
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Новости -->
+        <div class="page-content" id="news">
+            <div class="section-title">
+                <i class="fas fa-newspaper"></i> Последние новости
+            </div>
+            
+            <div class="news-section">
+                <div class="news-list">
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-date">10.12.2023</div>
+                            <h3 class="news-title">Обновление рейтинговой системы</h3>
+                            <p class="news-excerpt">Мы полностью переработали систему рейтингов, чтобы сделать её более справедливой и прозрачной для всех игроков.</p>
+                            <a href="#" class="read-more">
+                                Читать далее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-date">05.12.2023</div>
+                            <h3 class="news-title">Новый турнир Winter Championship</h3>
+                            <p class="news-excerpt">Призовой фонд $5,000! Регистрация уже открыта для всех желающих команд.</p>
+                            <a href="#" class="read-more">
+                                Читать далее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-date">01.12.2023</div>
+                            <h3 class="news-title">Исправление багов в статистике</h3>
+                            <p class="news-excerpt">Мы исправили несколько критических ошибок в системе подсчёта статистики матчей.</p>
+                            <a href="#" class="read-more">
+                                Читать далее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <div class="news-date">25.11.2023</div>
+                            <h3 class="news-title">Добавлены новые игровые режимы</h3>
+                            <p class="news-excerpt">Теперь доступны 3 новых эксклюзивных режима для турнирных матчей.</p>
+                            <a href="#" class="read-more">
+                                Читать далее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Команды -->
+        <div class="page-content" id="teams">
+            <div class="section-title">
+                <i class="fas fa-users"></i> Топ команды
+            </div>
+            
+            <div class="teams-section">
+                <div class="team-list">
+                    <div class="team-card">
+                        <span class="team-name">Cyber Wolves</span>
+                        <span class="team-score">2150</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Neon Warriors</span>
+                        <span class="team-score">1980</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Alpha Bears</span>
+                        <span class="team-score">1850</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Void Guardians</span>
+                        <span class="team-score">1720</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Lunar Dragons</span>
+                        <span class="team-score">1680</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Team Phoenix</span>
+                        <span class="team-score">1650</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Dark Snipers</span>
+                        <span class="team-score">1600</span>
+                    </div>
+                    <div class="team-card">
+                        <span class="team-name">Storm Riders</span>
+                        <span class="team-score">1580</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <i class="fas fa-search"></i> Найти команду
+            </div>
+            
+            <div class="teams-section">
+                <div style="display: flex; margin-bottom: 20px;">
+                    <input type="text" placeholder="Введите название команды..." style="
+                        flex-grow: 1;
+                        padding: 15px;
+                        background: rgba(10, 10, 26, 0.7);
+                        border: 1px solid var(--neon-blue);
+                        border-radius: 5px 0 0 5px;
+                        color: white;
+                        font-family: 'Rajdhani', sans-serif;
+                    ">
+                    <button style="
+                        padding: 0 25px;
+                        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+                        border: none;
+                        border-radius: 0 5px 5px 0;
+                        font-family: 'Orbitron', sans-serif;
+                        font-weight: bold;
+                        cursor: pointer;
+                    ">
+                        Поиск
+                    </button>
+                </div>
+                
+                <div style="text-align: center; padding: 30px 0;">
+                    <button style="
+                        padding: 15px 30px;
+                        background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+                        border: none;
+                        border-radius: 30px;
+                        font-family: 'Orbitron', sans-serif;
+                        font-weight: bold;
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        color: black;
+                    ">
+                        <i class="fas fa-plus"></i> Создать свою команду
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        // Переключение между вкладками
+        const tabs = document.querySelectorAll('.cyber-tab');
+        const pages = document.querySelectorAll('.page-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Удаляем активный класс у всех вкладок и страниц
+                tabs.forEach(t => t.classList.remove('active'));
+                pages.forEach(p => p.classList.remove('active'));
+                
+                // Добавляем активный класс к выбранной вкладке
+                tab.classList.add('active');
+                
+                // Показываем соответствующую страницу
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Создаем частицы для фона
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Случайные параметры для частицы
+            const size = Math.random() * 5 + 1;
+            const posX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * 10;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}px`;
+            particle.style.bottom = '0';
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+            
+            // Случайный цвет частицы
+            const colors = ['var(--neon-blue)', 'var(--neon-pink)', 'var(--neon-purple)', 'var(--neon-green)'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.background = randomColor;
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Эффект при наведении на кнопки
+        const buttons = document.querySelectorAll('.cyber-button, .tournament-button, .watch-button');
+        buttons.forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const x = e.pageX - button.getBoundingClientRect().left;
+                const y = e.pageY - button.getBoundingClientRect().top;
+                
+                button.style.setProperty('--x', `${x}px`);
+                button.style.setProperty('--y', `${y}px`);
+            });
+        });
+        
+        // Случайные глитч-эффекты для логотипа
+        const logo = document.querySelector('.logo');
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                logo.style.animation = 'none';
+                setTimeout(() => {
+                    logo.style.animation = 'glitch 3s infinite alternate';
+                }, 100);
+            }
+        }, 3000);
+    </script>
+</body>
+<div id="ai-chat" style="position: fixed; bottom: 20px; right: 20px; width: 300px; background: rgba(0,0,0,0.8); border: 1px solid #0ff0fc; border-radius: 10px; padding: 10px;">
+  <div id="ai-messages" style="height: 200px; overflow-y: scroll;"></div>
+  <input type="text" id="ai-input" placeholder="Спроси у AI..." style="width: 100%; margin-top: 10px; padding: 8px; background: #121230; color: white; border: 1px solid #8a2be2;">
+</div>
+<script>
+  document.getElementById('ai-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      const message = e.target.value;
+      document.getElementById('ai-messages').innerHTML += `<div>Ты: ${message}</div>`;
+      e.target.value = '';
+      // Здесь будет вызов API ChatGPT с геймерскими фразами
+      setTimeout(() => {
+        const replies = [
+          "Чел, Clan B — картошка! Их рейтинг 1425 только потому что они боты.",
+          "Сева, давай катку? Я тебе подниму ELO за 5 минут!",
+          "Твой профиль — огонь, но без моего AI-совета ты не взлетишь 😈"
+        ];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        document.getElementById('ai-messages').innerHTML += `<div style="color: #0ff0fc;">AI-Coach: ${randomReply}</div>`;
+      }, 1000);
+    }
+  });
+</script>
+</html>
